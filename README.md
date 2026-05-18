@@ -6,7 +6,8 @@
 
 <p align="center">
   <strong>The open-source AI phone.</strong><br>
-  Commercial AI phones are black boxes. This one isn't.<br><br>
+  Commercial AI phones are black boxes. This one isn't.<br>
+  <strong>v2.0 is coming — and it works on any phone.</strong><br><br>
   <sub><b>Open</b> <b>Cy</b>ber Jar<b>vis</b></sub>
 </p>
 
@@ -19,11 +20,28 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"></a>
-  <a href="#"><img src="https://img.shields.io/badge/Android-API_36+-34A853.svg?logo=android&logoColor=white" alt="Android"></a>
+  <a href="#v20-preview"><img src="https://img.shields.io/badge/v2.0-coming_soon-D4A039.svg" alt="v2.0 coming soon"></a>
+  <a href="#getting-started"><img src="https://img.shields.io/badge/v1.0-source_available-34A853.svg?logo=android&logoColor=white" alt="v1.0 source available"></a>
   <a href="#"><img src="https://img.shields.io/badge/Kotlin-2.0-7F52FF.svg?logo=kotlin&logoColor=white" alt="Kotlin"></a>
   <a href="#supported-models"><img src="https://img.shields.io/badge/LLMs_Tested-9_models-FF6F00.svg" alt="LLMs"></a>
   <a href="#"><img src="https://img.shields.io/badge/Tests-107+-brightgreen.svg" alt="Tests"></a>
 </p>
+
+---
+
+## v2.0 Preview
+
+v2.0 is being prepared as a normal app-based experience: no custom ROM required, no computer setup for everyday use. Install the app, follow the setup guide, and let OpenCyvis work from your Android phone.
+
+What is new:
+
+- **Works on any Android phone** — no custom ROM, no computer needed for the v2.0 setup path
+- **Remote control via chat** — send tasks from Telegram or Feishu, receive results and screenshots in chat
+- **Routines** — save frequent tasks and run them again with one tap
+- **Dark mode** — full day/night theme
+- **Multiple ROM support** — adapted for MIUI, ColorOS, OriginOS, and other Android variants
+
+**v2.0 will be open source soon.** v1.0 remains available today for developers who want to build from source.
 
 ---
 
@@ -41,22 +59,13 @@ OpenCyvis is the open-source alternative: you see every line of code, you pick t
 
 ## What It Does
 
-OpenCyvis turns any compatible Android device into an AI phone. Give it a task in natural language — it sees your screen, understands the UI, and operates apps just like you would.
+OpenCyvis turns Android into an AI phone. Give it a task in natural language — it sees your screen, understands the UI, and operates apps just like you would.
 
 **"Find the best-rated coffee shop nearby and get directions"** — opens Maps, searches, sorts by rating, taps the top result, starts navigation.
 
 **"Look up flights to Tokyo next Friday — find the cheapest direct one"** — opens the travel app, enters dates, filters direct flights, sorts by price.
 
 **"Set a 7am alarm, turn on Do Not Disturb, and switch to dark mode"** — chains Clock, Settings, and Display in one go.
-
-<p align="center">
-  <img src="docs/demos/demo1_qwen_final_6x.gif" width="270" alt="AI sets alarm, enables DND, switches to dark mode">
-  &nbsp;&nbsp;
-  <img src="docs/demos/demo_airpods_controlpanel_6x.gif" width="270" alt="AI compares AirPods prices on Amazon and Walmart">
-</p>
-<p align="center">
-  <sub>Left: three tasks in one go (alarm → DND → dark mode) &nbsp;|&nbsp; Right: cross-app price comparison on Amazon vs Walmart</sub>
-</p>
 
 ### It works in the background
 
@@ -77,52 +86,56 @@ Most AI tools lock your screen while they work. OpenCyvis operates on a **virtua
 Watch the AI work anytime. Take over if something looks wrong. Hand it back when you're done. It picks up right where you left off.
 
 <p align="center">
-  <img src="docs/demos/demo2_v3_cropped_4x.gif" width="270" alt="Watch mode — live view of AI's virtual display">
-  &nbsp;&nbsp;
-  <img src="docs/demos/demo_overlay_final_2x.gif" width="270" alt="Floating overlay while AI works in background">
+  <img src="docs/screenshots/en/home-clean.png" width="260" alt="OpenCyvis v2 clean home screen with routines">
 </p>
 <p align="center">
-  <sub>Left: watch the AI's virtual display in real time &nbsp;|&nbsp; Right: floating overlay on home screen while AI works</sub>
+  <sub>v2 preview: clean home and routines</sub>
 </p>
 
 ---
 
 ## How It Compares
 
-| | Commercial AI Phones | Cloud Phones | ADB-based Agents | **OpenCyvis** |
+| | Commercial AI Phones | Cloud Phones | Phone-control Scripts | **OpenCyvis** |
 |---|:---:|:---:|:---:|:---:|
 | **Open source** | ❌ | ❌ | ⚠️ | ✅ |
 | **Choose your AI model** | ❌ | ❌ | ⚠️ | ✅ |
 | **Data stays on device** | ❌ | ❌ | ⚠️ | ✅ |
 | **Phone usable while AI works** | ⚠️ | ✅ | ❌ | ✅ |
 | **Works with any app** | ⚠️ | ⚠️ | ⚠️ | ✅ |
-| **No ADB required** | ⚠️ | ⚠️ | ❌ | ✅ |
+| **No computer setup** | ⚠️ | ⚠️ | ❌ | ✅ |
+| **Works on everyday phones** | ✅ | ⚠️ | ❌ | ✅ |
 
 ---
 
 ## Features
 
-- **Background operation** — AI works on a virtual display; your phone stays free
-- **Any AI model** — Qwen, Claude, GPT, Llama, Gemma, or run locally with Ollama
+- **Works on any Android phone** — v2.0 removes the custom ROM path for everyday users
+- **Remote control via chat** — send tasks from Telegram or Feishu and get results back in the same conversation
+- **Routines** — save frequent tasks and run them again with one tap
+- **Dark mode** — full day/night theme for the app and control surface
+- **Multiple ROM support** — adapted for MIUI, ColorOS, OriginOS, and other Android variants
+- **Background operation** — AI works in its own space; your phone stays free
+- **Any AI model** — Qwen, Claude, GPT, Llama, Gemma, or local/private options
 - **Natural language** — describe what you want in plain text or voice
-- **Visual + structural understanding** — reads both screenshots and the UI element tree
-- **Watch & takeover** — observe the AI in real-time, take control anytime, hand back seamlessly
+- **Understands screens** — reads what is visible and acts on the right controls
+- **Watch & takeover** — observe the AI in real time, take control anytime, hand back seamlessly
 - **Asks when unsure** — pauses on ambiguity ("Which Zhang Wei? I see three") instead of guessing
 - **Safety guards** — repeated action detection, confirmation for sensitive operations
 - **Offline voice** — on-device speech recognition (Sherpa-ONNX), no internet needed
-- **100% open source** — audit every line
+- **Open source** — audit the code instead of trusting a black box
 
 ---
 
 ## Supported Models
 
-OpenCyvis is model-agnostic. Bring your own API key, or run a local model and never make a network call.
+OpenCyvis is model-agnostic. Bring your own AI account, connect a private service, or run a local model when privacy matters most.
 
 | Provider | Examples | Notes |
 |:---|:---|:---|
-| **OpenAI-compatible** | Qwen, GPT | Default — works with any OpenAI-compatible API |
-| **Anthropic** | Claude Sonnet | Native Anthropic API support |
-| **Ollama (local)** | Gemma, Llama, Qwen | Runs on-device or on your own server — nothing leaves your control |
+| **Cloud models** | Qwen, GPT, Claude | Use a hosted model when you want the best quality and speed |
+| **Private services** | Team or personal server | Route requests through infrastructure you control |
+| **Local models** | Gemma, Llama, Qwen | Run tasks without sending phone context to a third-party service |
 
 ### Local Model Benchmarks
 
@@ -146,30 +159,42 @@ We tested 6 local models on 4 real-world UI scenarios (open settings, dial a num
 
 An AI agent with full phone access is one of the most privileged pieces of software you can run. This is not a place for "trust us."
 
-- **Screenshots and UI tree stay in memory** — never written to disk, never stored
-- **You choose the endpoint** — self-hosted, private cloud, or fully local
+- **Task context is handled only for the work you ask OpenCyvis to do**
+- **You choose the AI service** — hosted, private, or local
 - **No telemetry, no analytics, no phone-home** — zero tracking code
 - **Open source** — security researchers, journalists, anyone can audit
-- **Local model option** — use Ollama and nothing leaves the device. Period.
+- **Local model option** — for maximum privacy
 
 ```
-Your screen ──→ Screenshot (RAM only) ──→ Your chosen AI ──→ Action
-                                           ↑
-                              You control this endpoint
+Your task ──→ OpenCyvis (on your phone) ──→ Your chosen AI ──→ Result
+                                      ↑
+                         You choose where requests go
 ```
 
 ---
 
 ## Getting Started
 
-### Requirements
+### v2.0 — coming soon
+
+v2.0 is being prepared for a simple app-based setup:
+
+1. Install the app
+2. Follow the setup wizard
+3. Start sending tasks
+
+### v1.0 — available now
+
+v1.0 remains available for developers who want to build and deploy from source. The requirements below apply to **v1.0 only**.
+
+#### v1.0 Requirements
 
 - AOSP system image
 - Platform key signing (system app privileges)
 
-OpenCyvis is a privileged system application. It requires system-level access for screen capture and input injection — no root hacks or accessibility service workarounds.
+These are not the planned v2.0 requirements. OpenCyvis v1.0 is a privileged system application, so it requires system-level access for screen capture and input injection.
 
-### Build from source
+#### Build from source
 
 ```bash
 git clone https://github.com/opencyvis/opencyvis-phone.git
@@ -177,17 +202,17 @@ cd opencyvis-phone/android
 ./gradlew assembleRelease
 ```
 
-### Deploy to device
+#### Deploy to device
 
 See [docs/aosp-deployment.md](docs/aosp-deployment.md) for deploying on AOSP-compatible devices — covers symlink setup, device makefile, and platform key signing.
 
-### No device? Try the emulator
+#### No device? Try the emulator
 
 ```bash
 ./scripts/deploy-emu.sh
 ```
 
-### Configure
+#### Configure
 
 Set your LLM provider in-app, or via deeplink:
 
@@ -206,7 +231,9 @@ adb shell am start -a android.intent.action.VIEW \
 ## Roadmap
 
 ### Next
-- Lighter installation (no ROM flash required)
+- v2.0 app-based setup
+- Remote IM control polish
+- Routines and settings UX
 - Cross-device coordination (phone + desktop)
 
 ### Vision
