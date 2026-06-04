@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import ai.opencyvis.action.Action
 import ai.opencyvis.action.ActionExecutor
+import ai.opencyvis.accessibility.VdAccessibilityService
 import ai.opencyvis.capture.ScreenCapture
 import ai.opencyvis.db.GlobalMemoryEntity
 import ai.opencyvis.db.GlobalMemoryRepository
@@ -41,6 +42,7 @@ class AgentEngine(
     private val memoryRepository: GlobalMemoryRepository? = null,
     private val viewTreeProvider: ((Int, Int, Int) -> String?)? = null,
     private val shouldForwardScreenshot: (() -> Boolean)? = null,
+    private val blacklistedPackages: Set<String> = emptySet(),
     private val onSaveRoutine: ((
         name: String, icon: String, instruction: String,
         scheduleType: String?, scheduleTime: String?, scheduleRepeat: String?,
@@ -214,6 +216,31 @@ class AgentEngine(
                 while (paused) {
                     delay(200)
                     if (!scope.isActive) return
+                }
+
+                // === BLACKLIST GATE ===
+                if (blacklistedPackages.isNotEmpty()) {
+                    val displayId = virtualDisplayManager?.displayId ?: 0
+                    val topPkg = VdAccessibilityService.getTopPackageOnDisplay(displayId)
+                    if (topPkg != null && topPkg in blacklistedPackages) {
+                        Log.i(TAG, "Blacklist gate: protected app $topPkg active at step $step")
+                        val reason = "Protected app ($topPkg) is active. Returning control to user."
+                        _state.value = AgentState.WaitingForHandoff(reason, step)
+                        _stepResults.emit(
+                            StepResult(step, "blacklist_handoff", "Protected app detected",
+                                true, reason, 0, false)
+                        )
+                        val deferred = CompletableDeferred<String?>()
+                        userHandoffDeferred = deferred
+                        val handoffSource = deferred.await()
+                        userHandoffDeferred = null
+                        if (handoffSource == null) {
+                            _state.value = AgentState.Idle()
+                            return
+                        }
+                        pendingActionFeedback = "User returned control after protected app."
+                        continue
+                    }
                 }
 
                 val stepStartTime = System.currentTimeMillis()

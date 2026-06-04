@@ -156,6 +156,16 @@
 
     </PreferenceCategory>
 
+    <!-- Security -->
+    <PreferenceCategory app:title="@string/pref_category_security">
+
+        <Preference
+            android:key="manage_blacklist"
+            android:title="@string/pref_app_blacklist"
+            android:summary="@string/pref_app_blacklist_summary" />
+
+    </PreferenceCategory>
+
     <!-- Developer -->
     <PreferenceCategory app:title="@string/pref_category_developer">
 

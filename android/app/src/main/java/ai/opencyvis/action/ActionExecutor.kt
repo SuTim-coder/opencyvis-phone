@@ -20,7 +20,8 @@ class ActionExecutor(
     private val displayId: Int = 0,
     displaySize: Point? = null,
     private val onOpenAppSuccess: ((packageName: String) -> Unit)? = null,
-    backend: PrivilegeBackend = SystemBackend()
+    backend: PrivilegeBackend = SystemBackend(),
+    private val blacklistedPackages: Set<String> = emptySet()
 ) {
 
     private val inputInjector = InputInjector(context, displayId, displaySize, backend)
@@ -74,10 +75,14 @@ class ActionExecutor(
                 is Action.OpenApp -> {
                     val result = appLauncher.launch(action.appName)
                     val ok = result.packageName != null
-                    if (ok) {
-                        onOpenAppSuccess?.invoke(result.packageName!!)
+                    if (ok && result.packageName in blacklistedPackages) {
+                        false to "Cannot open protected app: ${action.appName}"
+                    } else {
+                        if (ok) {
+                            onOpenAppSuccess?.invoke(result.packageName!!)
+                        }
+                        ok to result.description
                     }
-                    ok to result.description
                 }
 
                 is Action.Swipe -> {

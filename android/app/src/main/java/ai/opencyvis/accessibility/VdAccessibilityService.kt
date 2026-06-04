@@ -21,6 +21,33 @@ class VdAccessibilityService : AccessibilityService() {
         fun captureViewTree(displayId: Int, displayWidth: Int, displayHeight: Int): String? {
             return instance?.captureViewTreeInternal(displayId, displayWidth, displayHeight)
         }
+
+        fun getTopPackageOnDisplay(displayId: Int): String? {
+            val service = instance ?: return null
+            return try {
+                val windowList = if (displayId == 0) {
+                    service.windows
+                } else {
+                    try {
+                        @Suppress("UNCHECKED_CAST")
+                        val allWindows = service.javaClass.getMethod("getWindowsOnAllDisplays")
+                            .invoke(service) as? android.util.SparseArray<List<android.view.accessibility.AccessibilityWindowInfo>>
+                        allWindows?.get(displayId)
+                    } catch (e: Exception) {
+                        service.windows
+                    }
+                }
+                windowList?.firstNotNullOfOrNull { window ->
+                    val root = window.getRoot(0) ?: return@firstNotNullOfOrNull null
+                    val pkg = root.packageName?.toString()
+                    root.recycle()
+                    pkg?.takeIf { it != "com.android.systemui" }
+                }
+            } catch (e: Exception) {
+                Log.w(TAG, "getTopPackageOnDisplay failed", e)
+                null
+            }
+        }
     }
 
     override fun onServiceConnected() {

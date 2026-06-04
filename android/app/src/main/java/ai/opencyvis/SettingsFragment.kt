@@ -67,6 +67,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setupMaxStepsPreference()
         setupAutoSaveOnChange()
         setupMemoryPreference()
+        setupBlacklistPreference()
         setupQrScanPreference()
         setupConfigQrPreferences()
         setupManualConfigToggle()
@@ -357,6 +358,56 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 startActivity(Intent(requireContext(), ai.opencyvis.ui.ScheduleListActivity::class.java))
                 true
             }
+    }
+
+    private fun setupBlacklistPreference() {
+        val pref = findPreference<Preference>("manage_blacklist") ?: return
+        updateBlacklistSummary(pref)
+        pref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            showBlacklistDialog()
+            true
+        }
+    }
+
+    private fun updateBlacklistSummary(pref: Preference) {
+        val current = config.blacklistedPackages
+        pref.summary = if (current.isEmpty()) {
+            getString(R.string.pref_app_blacklist_none)
+        } else {
+            val pm = requireContext().packageManager
+            current.take(3).mapNotNull { pkg ->
+                try { pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0)).toString() }
+                catch (_: Exception) { pkg }
+            }.joinToString(", ") + if (current.size > 3) " (+${current.size - 3})" else ""
+        }
+    }
+
+    private fun showBlacklistDialog() {
+        val pm = requireContext().packageManager
+        val mainIntent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+        val launchableApps = pm.queryIntentActivities(mainIntent, 0)
+            .map { it.activityInfo }
+            .filter { it.packageName != requireContext().packageName }
+            .sortedBy { pm.getApplicationLabel(it.applicationInfo).toString().lowercase() }
+
+        val labels = launchableApps.map { pm.getApplicationLabel(it.applicationInfo).toString() }
+            .toTypedArray()
+        val packages = launchableApps.map { it.packageName }
+        val currentBlacklist = config.blacklistedPackages
+        val checkedItems = packages.map { it in currentBlacklist }.toBooleanArray()
+
+        android.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.pref_app_blacklist))
+            .setMultiChoiceItems(labels, checkedItems) { _, which, isChecked ->
+                checkedItems[which] = isChecked
+            }
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val selected = packages.filterIndexed { i, _ -> checkedItems[i] }.toSet()
+                config.blacklistedPackages = selected
+                updateBlacklistSummary(findPreference("manage_blacklist")!!)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     // --- QR Scan Registration ---

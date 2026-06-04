@@ -24,6 +24,7 @@ class ConfigRepository(context: Context) {
         private const val KEY_FEISHU_APP_SECRET = "feishu_app_secret"
         private const val KEY_FEISHU_ALLOWED_OPEN_ID = "feishu_allowed_open_id"
         private const val KEY_FEISHU_TARGET_CHAT_ID = "feishu_target_chat_id"
+        private const val KEY_BLACKLISTED_PACKAGES = "blacklisted_packages"
 
         const val PROVIDER_OPENAI = "openai"
         const val PROVIDER_ANTHROPIC = "anthropic"
@@ -142,4 +143,9 @@ class ConfigRepository(context: Context) {
     var feishuLastProcessedMsgTime: Long
         get() = prefs.getLong("feishu_last_processed_msg_time", 0L)
         set(value) = prefs.edit().putLong("feishu_last_processed_msg_time", value).apply()
+
+    var blacklistedPackages: Set<String>
+        get() = prefs.getString(KEY_BLACKLISTED_PACKAGES, "")!!
+            .split(",").filter { it.isNotBlank() }.toSet()
+        set(value) = prefs.edit().putString(KEY_BLACKLISTED_PACKAGES, value.joinToString(",")).apply()
 }

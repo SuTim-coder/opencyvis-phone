@@ -402,7 +402,8 @@ class AgentService : Service() {
                     taskDisplayGuard?.trackLaunch(launchedPkg)
                     mainHandler.postDelayed({ refreshControlledTasksFromVd("open_app_success") }, 250)
                 },
-                backend = b
+                backend = b,
+                blacklistedPackages = config.blacklistedPackages
             )
 
             val newEngine = AgentEngine(
@@ -416,6 +417,7 @@ class AgentService : Service() {
                     VdAccessibilityService.captureViewTree(displayId, w, h)
                 },
                 shouldForwardScreenshot = { config.imSendStepScreenshots },
+                blacklistedPackages = config.blacklistedPackages,
                 onSaveRoutine = { name, icon, instr, schedType, schedTime, schedRepeat,
                                   schedInterval, schedLocation, schedOnEnter ->
                     scope.launch(Dispatchers.IO) {
@@ -528,7 +530,8 @@ class AgentService : Service() {
                     taskDisplayGuard?.trackLaunch(launchedPkg)
                     mainHandler.postDelayed({ refreshControlledTasksFromVd("debug_open_app_success") }, 250)
                 },
-                backend = b
+                backend = b,
+                blacklistedPackages = config.blacklistedPackages
             ),
             config.maxSteps,
             vdm,
@@ -536,7 +539,8 @@ class AgentService : Service() {
             memoryRepository = memoryRepo,
             viewTreeProvider = { displayId, w, h ->
                 VdAccessibilityService.captureViewTree(displayId, w, h)
-            }
+            },
+            blacklistedPackages = config.blacklistedPackages
         )
         engine = newEngine
         currentInstruction = "debug takeover verification"
