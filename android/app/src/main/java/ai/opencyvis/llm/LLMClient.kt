@@ -70,7 +70,6 @@ class LLMClient(
                         put("tool_choice", "required")
                         if (disableThinking) {
                             put("thinking", JSONObject().put("type", "disabled"))
-                            put("enable_thinking", false)
                         } else if (model.contains("qwen3") || model.contains("qwq")) {
                             put("enable_thinking", false)
                         }

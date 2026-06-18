@@ -36,7 +36,7 @@ class ConfigRepository(context: Context) {
         const val DEFAULT_ANTHROPIC_BASE_URL = "https://api.anthropic.com"
         const val DEFAULT_OLLAMA_MODEL = "gemma4:26b-a4b-it-q4_K_M"
         const val DEFAULT_OLLAMA_BASE_URL = "https://localhost:11434"
-        const val DEFAULT_KIMI_MODEL = "moonshot-v1-8k"
+        const val DEFAULT_KIMI_MODEL = "kimi-k2.6"
         const val DEFAULT_KIMI_BASE_URL = "https://api.moonshot.cn/v1"
         const val DEFAULT_MAX_STEPS = 100
 
